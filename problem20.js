@@ -48,3 +48,29 @@ class Theater {
   console.log(myTheater.availableSeats()); // 🎟 Shows available seats
   console.log(myTheater.bookSeat(11)); // ❌ Out of range error
   
+
+  // Write a function in JavaScript that takes a string as input and returns the first 
+  // non-repeating character. If all characters are repeated, return null.
+  
+  function firstNonRepeatingChar(str) {
+    const charCount = {}; // Object to store character counts
+
+    // First pass: Count occurrences of each character
+    for (let char of str) {
+        charCount[char] = (charCount[char] || 0) + 1;
+    }
+
+    // Second pass: Find the first character with count 1
+    for (let char of str) {
+        if (charCount[char] === 1) {
+            return char;
+        }
+    }
+
+    return null; // No non-repeating character found
+}
+
+// Test cases
+console.log(firstNonRepeatingChar("aabbcdd")); // "c"
+console.log(firstNonRepeatingChar("aabbcc")); // null
+console.log(firstNonRepeatingChar("abacd")); // "b"
