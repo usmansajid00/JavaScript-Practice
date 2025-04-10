@@ -74,3 +74,58 @@ class Theater {
 console.log(firstNonRepeatingChar("aabbcdd")); // "c"
 console.log(firstNonRepeatingChar("aabbcc")); // null
 console.log(firstNonRepeatingChar("abacd")); // "b"
+
+
+// You are given data for 30 students, and each student has 7 subjects.
+// Each student has obtained different marks in each subject after annual exams.
+// 
+// You need to:
+// 
+// Calculate the average score for every student.
+// 
+// Calculate the percentage for each subject score of a student (assuming each subject is out of 100).
+// 
+
+
+// Step 1: Generate data for 30 students with random scores in 7 subjects
+const totalStudents = 30;
+const subjectsPerStudent = 7;
+const maxMarksPerSubject = 100;
+const totalMarks = subjectsPerStudent * maxMarksPerSubject;
+
+const students = Array.from({ length: totalStudents }, (_, i) => {
+  const scores = Array.from({ length: subjectsPerStudent }, () => Math.floor(Math.random() * 101)); // 0 to 100
+  return {
+    id: i + 1,
+    scores, // subject-wise scores
+  };
+});
+
+// Step 2: Calculate average and percentage for each student
+students.forEach(student => {
+  const totalScore = student.scores.reduce((sum, score) => sum + score, 0);
+  student.total = totalScore;
+  student.average = (totalScore / subjectsPerStudent).toFixed(2);
+  student.percentage = ((totalScore / totalMarks) * 100).toFixed(2);
+
+  // Individual subject percentage
+  student.subjectPercentages = student.scores.map(score => ((score / maxMarksPerSubject) * 100).toFixed(2));
+});
+
+// Step 3: Calculate collective class percentage (average of all students' percentages)
+const classPercentage = (
+  students.reduce((sum, student) => sum + parseFloat(student.percentage), 0) / totalStudents
+).toFixed(2);
+
+// Output the results
+console.log("All Student Results:");
+students.forEach(student => {
+  console.log(`Student ${student.id}:`);
+  console.log(`  Scores: ${student.scores.join(', ')}`);
+  console.log(`  Subject-wise %: ${student.subjectPercentages.join('% , ')}%`);
+  console.log(`  Total: ${student.total}`);
+  console.log(`  Average: ${student.average}`);
+  console.log(`  Overall %: ${student.percentage}%`);
+});
+
+console.log(`\n🏆 Collective Class Percentage: ${classPercentage}%`);
