@@ -129,3 +129,61 @@ students.forEach(student => {
 });
 
 console.log(`\n🏆 Collective Class Percentage: ${classPercentage}%`);
+
+
+// 
+// There are 20 employees in a company.
+// Each employee works on 5 different projects throughout the year.
+// Each project is evaluated and given a score out of 50 based on performance.
+// 
+// You need to:
+// 
+// Calculate the total score for each employee across all projects.
+// 
+// Calculate the average score of each employee.
+// 
+// Calculate the percentage score per project (out of 50).
+// 
+// Calculate the overall company performance percentage, which is the average percentage of all employees.
+
+
+const totalEmployees = 20;
+const projectsPerEmployee = 5;
+const maxMarksPerProject = 50;
+const totalMarkss = projectsPerEmployee * maxMarksPerProject;
+
+// Step 1: Generate random performance scores
+const employees = Array.from({ length: totalEmployees }, (_, i) => {
+  const scores = Array.from({ length: projectsPerEmployee }, () => Math.floor(Math.random() * 51)); // 0 to 50
+  return {
+    id: i + 1,
+    scores,
+  };
+});
+
+// Step 2: Calculate performance metrics
+employees.forEach(employee => {
+  const totalScore = employee.scores.reduce((sum, val) => sum + val, 0);
+  employee.total = totalScore;
+  employee.average = (totalScore / projectsPerEmployee).toFixed(2);
+  employee.percentage = ((totalScore / totalMarkss) * 100).toFixed(2);
+  employee.projectPercentages = employee.scores.map(score => ((score / maxMarksPerProject) * 100).toFixed(2));
+});
+
+// Step 3: Calculate overall company performance percentage
+const companyPerformance = (
+  employees.reduce((sum, emp) => sum + parseFloat(emp.percentage), 0) / totalEmployees
+).toFixed(2);
+
+// Output
+console.log("Employee Performance Report:");
+employees.forEach(emp => {
+  console.log(`Employee ${emp.id}:`);
+  console.log(`  Scores: ${emp.scores.join(', ')}`);
+  console.log(`  Project %s: ${emp.projectPercentages.join('% , ')}%`);
+  console.log(`  Total Score: ${emp.total}`);
+  console.log(`  Average Score: ${emp.average}`);
+  console.log(`  Overall %: ${emp.percentage}%`);
+});
+
+console.log(`\n🏢 Company Performance Percentage: ${companyPerformance}%`);
