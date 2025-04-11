@@ -187,3 +187,23 @@ employees.forEach(emp => {
 });
 
 console.log(`\n🏢 Company Performance Percentage: ${companyPerformance}%`);
+
+
+// You're given an array of stock prices where prices[i] is the price of a given stock on the ith day.
+// Write a JavaScript function to determine the maximum profit you can achieve by buying on one day and 
+// selling on another day after the buy day. If no profit can be made, return 0.
+
+function maxProfit(prices) {
+  let minPrice = Infinity;
+  let maxProfit = 0;
+
+  for (let price of prices) {
+    if (price < minPrice) {
+      minPrice = price;
+    } else {
+      maxProfit = Math.max(maxProfit, price - minPrice);
+    }
+  }
+
+  return maxProfit;
+}
